@@ -1,0 +1,49 @@
+---
+
+- name: install docker repo
+  become: yes
+  copy:
+    src: docker.repo
+    dest: '/etc/yum.repos.d/docker.repo'
+
+- name: install epel repository
+  become: yes
+  yum:
+    name: epel-release
+    state: present
+    update_cache: yes
+
+- name: install docker-engine and python-pip
+  become: yes
+  yum:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items:
+    - docker-engine
+    - python-pip
+#    - net-tools
+#    - wget
+#    - bind-utils
+#    - iptables-services
+#    - bridge-utils
+#    - bash-completion
+
+- name: create service in systemd
+  template:
+    src: docker.service.j2
+    dest: /usr/lib/systemd/system/docker.service
+  notify:
+    - reload unit
+    - restart docker
+
+- meta: flush_handlers
+
+- name: enable and start docker service
+  become: yes
+  service:
+    name: docker
+    enabled: yes
+  notify:
+    - reload unit
+    - restart docker

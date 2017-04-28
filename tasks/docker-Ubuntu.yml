@@ -1,0 +1,47 @@
+---
+
+- name: install extra ubuntu packages
+  become: yes
+  apt:
+    name: "linux-image-extra-{{ kernel.stdout }}"
+    state: present
+
+- name: install required packages
+  become: yes
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - gnupg2
+    - apt-transport-https
+    - ca-certificates
+
+- name: install gpg key
+  become: yes
+  apt_key:
+    keyserver: "{{ docker_engine.key_server }}"
+    id: "{{ docker_engine.docker_gpg_key }}"
+
+
+- name: install docker repo
+  become: yes
+  template:
+    src: docker.list.j2
+    dest: '/etc/apt/sources.list.d/docker.list'
+
+- name: update the index
+  apt:
+    update_cache: yes
+
+- name: install docker-engine
+  become: yes
+  apt:
+    name: docker-engine
+    state: present
+
+- name: enable and start docker service
+  service:
+    name: docker
+    state: started
+    enabled: yes
+  become: yes

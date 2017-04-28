@@ -1,0 +1,62 @@
+---
+- name: query kernel version
+  shell: uname -r|grep ^3.[1-9][0-9]
+  register: kernel
+  changed_when: no
+
+- name: verify kernel version
+  fail:
+  when: kernel.rc != 0
+  changed_when: kernel.rc != 0
+
+- name: ensure the docker group is present
+  group:
+    name: docker
+    state: present
+    system: yes
+  tags:
+    - docker
+
+- name: ensure vagrant is member of docker group
+  user:
+    name: vagrant
+    groups: docker
+    append: yes
+  when: groups['vagrant'] is defined and inventory_hostname in groups['vagrant']
+  tags:
+    - docker
+
+- name: ensure jenkins is member of docker group
+  user:
+    name: jenkins
+    groups: docker
+    append: yes
+  when: groups['buildserver'] is defined and inventory_hostname in groups['buildserver']
+  tags:
+    - docker
+
+- include: docker-RedHat.yml
+  when: ansible_os_family == 'RedHat'
+  tags:
+    - docker
+    - redhat
+
+- include: docker-Debian.yml
+  when: ansible_distribution == 'Debian'
+  tags:
+    - docker
+    - debian
+
+- include: docker-Ubuntu.yml
+  when: ansible_distribution == 'Ubuntu'
+  tags:
+    - docker
+    - ubuntu
+
+- name: install docker client for python
+  pip:
+    name: docker-py
+    state: present
+  tags:
+    - python
+  when: docker_engine.docker_py == True
