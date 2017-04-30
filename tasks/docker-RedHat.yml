@@ -8,6 +8,7 @@
 
 - name: install epel repository
   become: yes
+  when: ansible_os_family == 'RedHat'
   yum:
     name: epel-release
     state: present
@@ -15,6 +16,7 @@
 
 - name: install docker-engine and python-pip
   become: yes
+  when: ansible_os_family == 'RedHat'
   yum:
     name: "{{ item }}"
     state: present
