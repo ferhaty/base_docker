@@ -26,4 +26,4 @@ galaxy_info:
     - containers
 
   dependencies:
-    - { role: base_pip }
+    - { role: bbaassssiiee.base_pip }
