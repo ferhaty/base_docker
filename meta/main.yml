@@ -1,3 +1,4 @@
+---
 
 galaxy_info:
   author: bbaassssiiee
@@ -26,4 +27,4 @@ galaxy_info:
     - containers
 
   dependencies:
-    - { role: bbaassssiiee.base_pip }
+    - { role: bbaassssiiee.base_epel }
