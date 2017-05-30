@@ -25,7 +25,7 @@
 
 - name: create service in systemd
   template:
-    src: docker.service.j2
+    src: docker.service
     dest: /usr/lib/systemd/system/docker.service
   notify:
     - reload unit
