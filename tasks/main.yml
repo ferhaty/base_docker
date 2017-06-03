@@ -56,7 +56,7 @@
 
 - name: install docker client for python
   pip:
-    name: docker-py
+    name: docker
     state: present
   tags:
     - python
