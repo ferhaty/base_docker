@@ -10,15 +10,15 @@ galaxy_info:
   min_ansible_version: 2.2.1
 
   platforms:
-  - name: EL
-    versions:
-    - 7
-  - name: Ubuntu
-    versions:
-    - trusty
-  - name: Debian
-    versions:
-    - jessie
+    - name: EL
+      versions:
+        - 7
+    - name: Ubuntu
+      versions:
+        - trusty
+    - name: Debian
+      versions:
+        - jessie
 
   galaxy_tags:
     - docker
@@ -27,4 +27,4 @@ galaxy_info:
     - containers
 
   dependencies:
-    - { role: bbaassssiiee.base_epel }
+    - bbaassssiiee.base_epel
