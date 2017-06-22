@@ -60,4 +60,4 @@
     state: present
   tags:
     - python
-  when: docker_engine.docker_py == True
+  when: docker_engine.docker_py
