@@ -5,7 +5,7 @@ base_docker is a role to install docker.
 Requirements
 ------------
 
-RHEL-like, or Debian/Ubuntu systems
+RHEL-like, maybe Debian/Ubuntu systems
 
 
 Role Variables
