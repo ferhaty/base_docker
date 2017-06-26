@@ -1,0 +1,5 @@
+---
+- hosts: all
+  roles:
+    - role: epel
+    - role: base_docker

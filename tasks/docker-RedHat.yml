@@ -6,7 +6,7 @@
     src: docker.repo
     dest: '/etc/yum.repos.d/docker.repo'
 
-- name: install docker-engine and python-pip
+- name: install docker-engine
   become: yes
   when: ansible_os_family == 'RedHat'
   yum:
@@ -15,7 +15,6 @@
     update_cache: yes
   with_items:
     - docker-engine
-    - python-pip
 #    - net-tools
 #    - wget
 #    - bind-utils
@@ -27,6 +26,7 @@
   template:
     src: docker.service
     dest: /usr/lib/systemd/system/docker.service
+    force: no
   notify:
     - reload unit
     - restart docker
